@@ -1,0 +1,97 @@
+---
+title: "atv01_IA"
+output: html_document
+date: '2022-03-12'
+---
+https://dados.gov.br/dataset/serie-historica-de-precos-de-combustiveis-por-revenda/resource/07a93382-8860-4ea9-9005-bca747ba9ed2
+
+"ccccc____ccDd_cc"
+```{r}
+
+library(readr)
+combustivel <- read_csv2("combustivel.csv", col_types = cols('Data da Coleta'=col_date(format = "%m/%d/%Y")))
+
+
+combustivel
+```
+```{r}
+
+```
+
+
+```{r}
+# 
+# library(readr)
+# combustivel <- read_csv2("combustivel.csv", 
+#     col_types = cols(Revenda=col_skip(), 
+#                      'Nome da Rua'=col_skip(),
+#                      'Numero Rua'=col_skip(),
+#                      Complemento=col_skip(),
+#                      Bairro=col_skip(),
+#                      'Valor de Compra'=col_skip(),
+#                      'Unidade de Medida'=col_skip(),
+#                      'Data da Coleta' = col_date(format = "%d/%m/%Y")))
+# combustivel
+
+
+```
+
+
+```{r}
+
+library(dplyr)
+
+gasolina <- combustivel %>% 
+  select(Regiao='Regiao - Sigla',
+         Estado='Estado - Sigla',
+         Municipio,
+         Estabelecimento=Revenda,
+         CNPJ='CNPJ da Revenda',
+         #'Nome da Rua',
+         #'Numero Rua',
+         #Complemento,
+         #Bairro,
+         Cep,
+         Produto,
+         Data_coleta='Data da Coleta',
+         Preco='Valor de Venda',
+         #'Valor de Compra',
+         #'Unidade de Medida',
+         Bandeira
+)
+gasolina <- filter(gasolina, Produto == "GASOLINA")
+gasolina
+```
+```{r}
+
+
+group_by(gasolina,CNPJ)%>%summarise(Total=mean(Preco))
+  
+# Preço médio da gasolina por estabelecimento no mês de DEZ/21
+```
+
+
+```{r}
+#preço medio da gasolina por região do pais
+
+group_by(gasolina,Regiao)%>%summarise(Total=mean(Preco))
+
+```
+```{r}
+#Municipio com o maior preço medio de gasolina
+
+maior_preco <- group_by(gasolina,Municipio, Estado)%>%summarise(Total=mean(Preco))
+
+maior_preco %>% arrange(desc(Total))
+```
+```{r}
+menor_preco <- group_by(gasolina,Municipio, Estado)%>%summarise(Total=mean(Preco))
+
+menor_preco %>% arrange(Total)
+
+```
+
+
+
+
+
