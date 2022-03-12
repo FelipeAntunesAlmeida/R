@@ -2,10 +2,11 @@
 title: "atv01_IA"
 output: html_document
 date: '2022-03-12'
----
-https://dados.gov.br/dataset/serie-historica-de-precos-de-combustiveis-por-revenda/resource/07a93382-8860-4ea9-9005-bca747ba9ed2
+dataset: https://dados.gov.br/dataset/serie-historica-de-precos-de-combustiveis-por-revenda/resource/07a93382-8860-4ea9-9005-bca747ba9ed2
 
-"ccccc____ccDd_cc"
+---
+
+
 ```{r}
 
 library(readr)
@@ -14,10 +15,6 @@ combustivel <- read_csv2("combustivel.csv", col_types = cols('Data da Coleta'=co
 
 combustivel
 ```
-```{r}
-
-```
-
 
 ```{r}
 # 
